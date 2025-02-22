@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class = 'text-center mb-5'>Task Management</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{message.tags}}" role="alert">
+                {{message}}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <!-- Form -->
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="ป้อนชื่องานที่ต้องการเพิ่ม" name = 'taskName'>
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">เพิ่มงาน</button>
+        </div>
+    </form>
+    <!-- Table -->
+    <table class="table table-Light table-striped table-bordered">
+        <thead>
+          <tr>
+            <th scope="col" class = 'text-center'>ชื่องาน</th>
+            <th scope="col" class = 'text-center'>สถานะ</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for task in allTasks %}
+                {% if task.status == True %}
+                    <tr>
+                        <td>{{ task.name }}</td>
+                        <td class = 'text-center'><a href="{%url 'pending' task.id%}" class = 'btn btn-success'> เรียบร้อย </a></td>
+                    </tr>
+                {%else%}
+                    <tr>
+                        <td>{{ task.name }}</td>
+                        <td class = 'text-center'><a href="{%url 'completed' task.id%}" class = 'btn btn-warning'> รอดำเนินการ </a></td>
+                    </tr>
+                {%endif%}
+            {% endfor %}
+        </tbody>
+      </table>
+{% endblock %}
