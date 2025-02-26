@@ -17,6 +17,8 @@
             <button class="btn btn-outline-secondary" type="submit" id="button-addon2">เพิ่มงาน</button>
         </div>
     </form>
+    
+    {% if allTasks %}
     <!-- Table -->
     <table class="table table-Light table-striped table-bordered">
         <thead>
@@ -38,7 +40,23 @@
                         <td class = 'text-center'><a href="{%url 'completed' task.id%}" class = 'btn btn-warning'> รอดำเนินการ </a></td>
                     </tr>
                 {%endif%}
-            {% endfor %}
+          >
+      </nav>  {% endfor %}
         </tbody>
       </table>
+    <!-- Pagination -->
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          {% for num in allTasks.paginator.page_range %}
+            {% if num != allTasks.number %}
+                <li class="page-item"><a class="page-link" href="?page={{num}}">{{num}}</a></li>
+            {% else %}
+                <li class="page-item active"><a class="page-link" href="?page={{num}}">{{num}}</a></li>
+            {% endif %}
+          {% endfor %}
+
+        </ul>
+    {% else %}
+        <p class = 'text-center my-5'>ไม่มีงาน</p>
+    {% endif %}
 {% endblock %}

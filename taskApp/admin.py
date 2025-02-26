@@ -5,7 +5,7 @@ from .models import Task
 
 
 class taskAdmin(admin.ModelAdmin):
-    list_display = ['name', 'status']
+    list_display = ['name', 'status', 'manager']
     search_fields = ['name']
     list_filter = ['status']
 
